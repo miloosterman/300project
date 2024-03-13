@@ -6,20 +6,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Dungeon</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pirata+One&display=swap" rel="stylesheet">
 </head>
 
 <body>
     <section id="game-area">
-        <img id="viewport" src="images/pathRoom.jpeg" alt="currentPlace">
-        <div id="nav-buttons">
-            <button id="forward">Go Forward</button>
-            <div id="middle-buttons">
-                <button id="left">Turn Left</button>
-                <button id="right">Turn Right</button>
-            </div>
-            <button id="back">Turn Back</button>
-        </div>
+        
+        <img id="viewport" src="images/entryRoom.jpeg" alt="currentPlace">
+        <p id="audio-instruction">Press space to play audio description</p>
+        <div id="arrow-forward" class="arrow"></div>
+        <div id="arrow-left" class="arrow"></div>
+        <div id="arrow-right" class="arrow"></div>
+        <div id="arrow-back" class="arrow"></div>
     </section>
+    <audio id="entryAudio" preload="auto">
+        <source src="audio/entryAudio.m4a" type="audio/mp4">
+        Your browser does not support the audio element.
+    </audio>
+    <audio id="whiteAudio" preload="auto">
+        <source src="audio/whiteAudio.m4a" type="audio/mp4">
+        Your browser does not support the audio element.
+    </audio>
+
     <script src="script.js"></script>
 </body>
 
