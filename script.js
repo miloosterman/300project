@@ -6,7 +6,7 @@ const viewport = document.getElementById('viewport');
 const playButton = document.getElementById('playButton');
 const rooms =
     [['', '', ''],
-    ['', 'images/stairWay.jpeg', ''],
+    ['', 'images/stairRoom.jpeg', ''],
     ['images/whiteRoom.jpeg', 'images/entryRoom.jpeg', 'images/candleRoom.jpeg']]
 let currX = 2;
 let currY = 1;
@@ -31,6 +31,10 @@ function playRoomSpecificAudio() {
         audioElement = document.getElementById('whiteAudio');
     } else if (currentRoomImage === 'entryRoom.jpeg') {
         audioElement = document.getElementById('entryAudio');
+    } else if (currentRoomImage === 'candleRoom.jpeg') {
+        audioElement = document.getElementById('candleAudio');
+    } else if (currentRoomImage === 'stairRoom.jpeg') {
+        audioElement = document.getElementById('stairAudio');
     }
 
     if (audioElement) {
