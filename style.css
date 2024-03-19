@@ -72,3 +72,29 @@ body, html {
     border-width: 20px 0 20px 20px;
     border-color: transparent transparent transparent white;
 }
+#inventory {
+    position: fixed;
+    bottom: 5%;
+    left: 5%;
+    width: 300px; /* Adjust based on your needs */
+    height: 100px; /* Adjust based on your needs */
+    border: 2px solid red; /* Creates an outline */
+    background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
+    z-index: 1000; /* Ensure it stays above other content */
+    color: #333; /* Text color */
+}
+
+#inventoryLabel {
+    position: fixed;
+    bottom: 11%;
+    left: 10%;
+    z-index: 1000;
+    color: red;
+    font-size: 32px;
+}
+
+#mirrorItem {
+    height: 100px;
+    width: 100px;
+    z-index: 1000;
+}

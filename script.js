@@ -4,6 +4,7 @@ const back = document.getElementById('arrow-back');
 const right = document.getElementById('arrow-right');
 const viewport = document.getElementById('viewport');
 const playButton = document.getElementById('playButton');
+const inventory = document.getElementById('inventory');
 const rooms =
     [['', '', ''],
     ['', 'images/stairRoom.jpeg', ''],
@@ -11,6 +12,9 @@ const rooms =
 let currX = 2;
 let currY = 1;
 let isAudioPlaying = false;
+let interactiveArea = document.getElementById('interactiveArea');
+        
+
 
 setButtonFunctions();
 updateButtonVisibility();
@@ -28,7 +32,7 @@ function playRoomSpecificAudio() {
     let audioElement;
 
     if (currentRoomImage === 'whiteRoom.jpeg') {
-        audioElement = document.getElementById('whiteAudio');
+        audioElement = document.getElementById('whiteAudio')
     } else if (currentRoomImage === 'entryRoom.jpeg') {
         audioElement = document.getElementById('entryAudio');
     } else if (currentRoomImage === 'candleRoom.jpeg') {
@@ -67,6 +71,7 @@ function changeRoom(newSrc) {
     viewport.src = newSrc;
     isAudioPlaying = false;
     updateButtonVisibility();
+    addRoomFunctionality();
 }
 
 function setButtonFunctions() {
@@ -93,6 +98,24 @@ function setButtonFunctions() {
             currX++;
             changeRoom(rooms[currX][currY]);
         }
+    }
+}
+
+function addRoomFunctionality() {
+    const currentRoomImage = viewport.src.split('/').pop();
+    if (currentRoomImage === 'whiteRoom.jpeg') {
+        interactiveArea.shape = 'rect';
+        interactiveArea.coords = '800,300,1000,800';
+        interactiveArea.href = "#";
+        document.getElementById('interactiveArea').addEventListener('click', function() {
+            let mirror = document.createElement('img')
+            mirror.src = 'images/mirror.png';
+            mirror.height = 100;
+            mirror.width = 100;
+            mirror.z_index = 1000;
+            inventory.appendChild(mirror);
+
+        });
     }
 }
 function updateButtonVisibility() {
