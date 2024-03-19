@@ -13,7 +13,7 @@ let currX = 2;
 let currY = 1;
 let isAudioPlaying = false;
 let interactiveArea = document.getElementById('interactiveArea');
-        
+
 
 
 setButtonFunctions();
@@ -32,7 +32,16 @@ function playRoomSpecificAudio() {
     let audioElement;
 
     if (currentRoomImage === 'whiteRoom.jpeg') {
-        audioElement = document.getElementById('whiteAudio')
+        audioElement = document.getElementById('whiteAudio');
+        interactiveArea.shape = 'rect';
+        interactiveArea.coords = '30%,30%,70%,70%';
+        interactiveArea.href = "#";
+        let mirror = document.createElement('img')
+        mirror.src = 'images/mirror.png';
+        mirror.height = 100;
+        mirror.width = 100;
+        mirror.z_index = 1000;
+        inventory.appendChild(mirror);
     } else if (currentRoomImage === 'entryRoom.jpeg') {
         audioElement = document.getElementById('entryAudio');
     } else if (currentRoomImage === 'candleRoom.jpeg') {
@@ -101,23 +110,6 @@ function setButtonFunctions() {
     }
 }
 
-function addRoomFunctionality() {
-    const currentRoomImage = viewport.src.split('/').pop();
-    if (currentRoomImage === 'whiteRoom.jpeg') {
-        interactiveArea.shape = 'rect';
-        interactiveArea.coords = '800,300,1000,800';
-        interactiveArea.href = "#";
-        document.getElementById('interactiveArea').addEventListener('click', function() {
-            let mirror = document.createElement('img')
-            mirror.src = 'images/mirror.png';
-            mirror.height = 100;
-            mirror.width = 100;
-            mirror.z_index = 1000;
-            inventory.appendChild(mirror);
-
-        });
-    }
-}
 function updateButtonVisibility() {
     left.style.display = rooms[currX][currY - 1] ? 'block' : 'none';
     right.style.display = rooms[currX][currY + 1] ? 'block' : 'none';
