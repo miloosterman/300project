@@ -143,12 +143,12 @@ function fadeInWhiteScreen() {
                 overlay.style.display = 'none';
                 overlay.style.opacity = '0';
                 if (!document.getElementById('mirror') || !document.getElementById('flame')) {
-                    let audioElement = document.getElementById('resetAudio');
-                    audioElement.play()
                     currX = 2;
                     currY = 1;
                     changeRoom(rooms[currX][currY]);
                     updateButtonVisibility();
+                    let audioElement = document.getElementById('resetAudio');
+                    audioElement.play()
                 } else {
                     let audioElement = document.getElementById('escapeAudio');
                     audioElement.play()
