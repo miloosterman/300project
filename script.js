@@ -6,7 +6,7 @@ const viewport = document.getElementById('viewport');
 const playButton = document.getElementById('playButton');
 const inventory = document.getElementById('inventory');
 const rooms =
-    [['', '', ''],
+    [['', 'fadeToWhite', ''],
     ['', 'images/stairRoom.jpeg', ''],
     ['images/whiteRoom.jpeg', 'images/entryRoom.jpeg', 'images/candleRoom.jpeg']]
 let currX = 2;
@@ -33,19 +33,28 @@ function playRoomSpecificAudio() {
 
     if (currentRoomImage === 'whiteRoom.jpeg') {
         audioElement = document.getElementById('whiteAudio');
-        interactiveArea.shape = 'rect';
-        interactiveArea.coords = '30%,30%,70%,70%';
-        interactiveArea.href = "#";
-        let mirror = document.createElement('img')
-        mirror.src = 'images/mirror.png';
-        mirror.height = 100;
-        mirror.width = 100;
-        mirror.z_index = 1000;
-        inventory.appendChild(mirror);
+        if (!document.getElementById('mirror')) {
+            let mirror = document.createElement('img');
+            mirror.id = 'mirror'
+            mirror.src = 'images/mirror.png';
+            mirror.height = 100;
+            mirror.width = 100;
+            mirror.z_index = 1000;
+            inventory.appendChild(mirror);
+        }
     } else if (currentRoomImage === 'entryRoom.jpeg') {
         audioElement = document.getElementById('entryAudio');
     } else if (currentRoomImage === 'candleRoom.jpeg') {
         audioElement = document.getElementById('candleAudio');
+        if (!document.getElementById('flame')) {
+            let flame = document.createElement('img')
+            flame.id = 'flame';
+            flame.src = 'images/flame.png';
+            flame.height = 100;
+            flame.width = 100;
+            flame.z_index = 1000;
+            inventory.appendChild(flame);
+        }
     } else if (currentRoomImage === 'stairRoom.jpeg') {
         audioElement = document.getElementById('stairAudio');
     }
@@ -70,6 +79,9 @@ function playRoomSpecificAudio() {
 }
 
 function changeRoom(newSrc) {
+    if (newSrc.includes('fadeToWhite')) {
+        fadeInWhiteScreen();
+    }
     const audioElements = document.querySelectorAll('audio');
     audioElements.forEach(audio => {
         if (!audio.paused) {
@@ -80,7 +92,6 @@ function changeRoom(newSrc) {
     viewport.src = newSrc;
     isAudioPlaying = false;
     updateButtonVisibility();
-    addRoomFunctionality();
 }
 
 function setButtonFunctions() {
@@ -115,4 +126,38 @@ function updateButtonVisibility() {
     right.style.display = rooms[currX][currY + 1] ? 'block' : 'none';
     forward.style.display = rooms[currX - 1] && rooms[currX - 1][currY] ? 'block' : 'none';
     back.style.display = rooms[currX + 1] && rooms[currX + 1][currY] ? 'block' : 'none';
+}
+
+function fadeInWhiteScreen() {
+    const overlay = document.getElementById('whiteOverlay');
+    overlay.style.display = 'block';
+    let opacity = 0;
+
+    const fade = setInterval(function () {
+        if (opacity < 1) {
+            opacity += 0.1;
+            overlay.style.opacity = opacity.toString();
+        } else {
+            clearInterval(fade);
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                overlay.style.opacity = '0';
+                if (!document.getElementById('mirror') || !document.getElementById('flame')) {
+                    let audioElement = document.getElementById('resetAudio');
+                    audioElement.play()
+                    currX = 2;
+                    currY = 1;
+                    changeRoom(rooms[currX][currY]);
+                    updateButtonVisibility();
+                } else {
+                    let audioElement = document.getElementById('escapeAudio');
+                    audioElement.play()
+                    viewport.src = 'images/landscape.jpeg';
+                    let infoElement = document.getElementById('info');
+                    infoElement.innerHTML = 'Congratulations! You have escaped the room!';
+                }
+
+            }, 5000);
+        }
+    }, 100);
 }
